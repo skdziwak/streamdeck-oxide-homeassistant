@@ -1,0 +1,21 @@
+url: "ws://192.168.0.80:8123/api/websocket"
+menu:
+  name: "Home"
+  buttons:
+    - type: "switch"
+      entity_id: "switch.bedroom_light_switch_1"
+      name: "Bedroom Light Switch 1"
+    - type: "rgb_light"
+      entity_id: "light.h619a"
+      name: "Bedroom RGB"
+
+    - type: "menu"
+      name: "Bedroom"
+      buttons:
+        - type: "switch"
+          entity_id: "switch.bedroom_light"
+          name: "Bedroom Light"
+        - type: "rgb_light"
+          entity_id: "light.bedroom_rgb"
+          name: "Bedroom RGB"
+

@@ -1,0 +1,28 @@
+[package]
+name = "streamdeck-homeassistant"
+version = "0.0.1"
+edition = "2021"
+authors = ["Szymon Dziwak"]
+description = "A library for integrating Elgato Stream Deck with Home Assistant that relies on streamdeck-oxide"
+repository = "https://github.com/skdziwak/streamdeck-oxide-homeassistant"
+license = "MIT OR Apache-2.0"
+keywords = ["streamdeck", "homeassistant", "smarthome", "iot"]
+categories = ["api-bindings", "hardware-support"]
+readme = "README.md"
+
+[dependencies]
+async-trait = "0.1.88"
+hass-rs = "0.4.0"
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.140"
+serde_yaml = "0.9.34"
+streamdeck-oxide = { version = "0.2.0", features = ["plugins"]}
+tokio = { version = "1.44.2", features = ["full"] }
+
+[lib]
+name = "streamdeck_homeassistant"
+path = "src/lib.rs"
+
+[[example]]
+name = "streamdeck_homeassistant"
+path = "examples/streamdeck_homeassistant.rs"
