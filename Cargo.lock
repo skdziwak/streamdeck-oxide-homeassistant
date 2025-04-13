@@ -1571,10 +1571,11 @@ dependencies = [
 
 [[package]]
 name = "streamdeck-homeassistant"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "async-trait",
  "hass-rs",
+ "resvg",
  "serde",
  "serde_json",
  "serde_yaml",
@@ -1584,9 +1585,9 @@ dependencies = [
 
 [[package]]
 name = "streamdeck-oxide"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b32966c4d1b37316d3487137066b7c528186d7bfbc5f4849f0124cf23293dc03"
+checksum = "35490753746cab9d019faed83d979266fc3f5e8f162ce6897529299c246718f1"
 dependencies = [
  "ab_glyph",
  "async-trait",

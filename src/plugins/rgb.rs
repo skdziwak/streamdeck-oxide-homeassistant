@@ -2,12 +2,9 @@
 //!
 //! This plugin provides a color picker interface for RGB lights in HomeAssistant.
 
+use resvg::tiny_skia::Color;
 use streamdeck_oxide::{
-    generic_array::ArrayLength,
-    md_icons,
-    plugins::{Plugin, PluginContext, PluginNavigation},
-    view::customizable::{ClickButton, CustomizableView, ToggleButton},
-    View,
+    generic_array::ArrayLength, md_icons, plugins::{Plugin, PluginContext, PluginNavigation}, view::customizable::{ClickButton, CustomizableView, ToggleButton}, Theme, View
 };
 
 use crate::hass::PersistentHassConnection;
@@ -40,6 +37,19 @@ const COLORS: &[(&str, (u8, u8, u8))] = &[
     ("Teal", (0, 128, 128)),
 ];
 
+fn get_button_theme(color: (u8, u8, u8)) -> Theme {
+    let (r, g, b) = color;
+    Theme::new(
+        Color::from_rgba8(r, g, b, 255),
+        Color::from_rgba8(235, 51, 148, 255),
+        Color::from_rgba8(41, 41, 51, 255),
+        Color::from_rgba8(51, 217, 230, 255),
+        Color::from_rgba8(255, 89, 0, 255),
+        Color::from_rgba8(242, 242, 255, 255),
+        Color::from_rgba8(255, 255, 255, 255),
+    )
+}
+
 /// Converts RGB color values to HSV (Hue, Saturation, Value) format.
 ///
 /// # Arguments
@@ -64,7 +74,7 @@ fn rgb_to_hsv(r: u8, g: u8, b: u8) -> (f32, f32, f32) {
     let delta = max - min;
     
     // Hue calculation
-    let h = if delta == 0.0 {
+    let mut h = if delta == 0.0 {
         0.0
     } else if max == r_f {
         60.0 * (((g_f - b_f) / delta) % 6.0)
@@ -73,6 +83,11 @@ fn rgb_to_hsv(r: u8, g: u8, b: u8) -> (f32, f32, f32) {
     } else {
         60.0 * (((r_f - g_f) / delta) + 4.0)
     };
+    
+    // Ensure hue is non-negative
+    if h < 0.0 {
+        h += 360.0;
+    }
     
     // Saturation calculation
     let s = if max == 0.0 { 0.0 } else { delta / max };
@@ -193,7 +208,7 @@ where
                             Ok(())
                         }
                     },
-                )
+                ).with_theme(get_button_theme((r, g, b)))
             )?;
         }
         

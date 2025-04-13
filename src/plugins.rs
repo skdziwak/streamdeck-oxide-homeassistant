@@ -6,6 +6,7 @@
 pub mod rgb;
 use std::sync::Arc;
 
+use resvg::tiny_skia::Color;
 use streamdeck_oxide::{
     generic_array::{
         typenum::{U3, U5},
@@ -14,7 +15,7 @@ use streamdeck_oxide::{
     md_icons,
     plugins::{Plugin, PluginContext, PluginNavigation},
     view::customizable::{ClickButton, CustomizableView, ToggleButton},
-    View,
+    Theme, View,
 };
 
 use crate::{
@@ -142,7 +143,7 @@ where
     let mut view = CustomizableView::new();
     let back_navigation = Some(PluginNavigation::<W, H>::new(HomeAssistantPlugin::<W, H> {
         menu: plugin.menu.clone(),
-        back_navigation: None,
+        back_navigation: plugin.back_navigation.clone(),
     }));
     for (index, item) in plugin.menu.buttons.iter().enumerate() {
         if index > W::to_usize() * H::to_usize() {
